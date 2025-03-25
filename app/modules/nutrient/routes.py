@@ -6,10 +6,6 @@ from app.modules.nutrient.repository import NutrientRepository
 router = APIRouter()
 nutrient_repository = NutrientRepository()
 
-@router.get("/")
-def read_root():
-    return {"message": "Nutrient API"}
-
 @router.get("/nutrients")
 def list_nutrients() -> Dict[int, Nutrient]:
     return nutrient_repository.list_all()

@@ -7,12 +7,14 @@ class IngredientRepository:
         self._ingredients[1] = Ingredient(
             name="All-Purpose Flour",
             description="Standard white wheat flour for baking",
-            weight_grams=1000.0
+            weight_grams=1000.0,
+            nutrient_id=1
         )
         self._ingredients[2] = Ingredient(
             name="Granulated Sugar",
             description="Regular white sugar for baking and cooking",
-            weight_grams=500.0
+            weight_grams=500.0,
+            nutrient_id=2
         )
         self._next_id = 3
 
