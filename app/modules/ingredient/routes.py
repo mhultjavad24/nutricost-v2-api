@@ -2,13 +2,11 @@ from fastapi import APIRouter, HTTPException
 from typing import Dict, Union
 from app.modules.ingredient.model import Ingredient
 from app.modules.ingredient.repository import IngredientRepository
+from app.modules.nutrient.repository import NutrientRepository
 
 router = APIRouter()
 ingredient_repository = IngredientRepository()
-
-@router.get("/")
-def read_root():
-    return {"message": "Ingredient API"}
+nutrient_repository = NutrientRepository()
 
 @router.get("/ingredients")
 def list_ingredients() -> Dict[int, Ingredient]:
@@ -23,11 +21,19 @@ def read_ingredient(ingredient_id: int, q: Union[str, None] = None):
 
 @router.post("/ingredients")
 def create_ingredient(ingredient: Ingredient):
+    # Validate that the nutrient exists
+    if nutrient_repository.get(ingredient.nutrient_id) is None:
+        raise HTTPException(status_code=404, detail="Referenced nutrient not found")
+    
     ingredient_id, created_ingredient = ingredient_repository.create(ingredient)
     return {"ingredient_id": ingredient_id, "ingredient": created_ingredient}
 
 @router.put("/ingredients/{ingredient_id}")
 def update_ingredient(ingredient_id: int, ingredient: Ingredient):
+    # Validate that the nutrient exists
+    if nutrient_repository.get(ingredient.nutrient_id) is None:
+        raise HTTPException(status_code=404, detail="Referenced nutrient not found")
+    
     updated_ingredient = ingredient_repository.update(ingredient_id, ingredient)
     if updated_ingredient is None:
         raise HTTPException(status_code=404, detail="Ingredient not found")

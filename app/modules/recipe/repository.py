@@ -7,7 +7,11 @@ class RecipeRepository:
         self._recipes[1] = Recipe(
             name="Classic Chocolate Chip Cookies",
             description="Delicious homemade chocolate chip cookies that are soft and chewy",
-            rating=9.5
+            rating=9.5,
+            ingredients={
+                1: 250.0,  # 250g of flour
+                2: 200.0   # 200g of sugar
+            }
         )
         self._next_id = 2
 
