@@ -4,5 +4,7 @@ from app.modules.recipe.routes import router as recipe_router
 
 app = FastAPI()
 
-app.include_router(recipe_router, prefix="/api")
-app.include_router(ingredient_router, prefix="/api")
+prefix = "/api/v1"
+
+app.include_router(recipe_router, prefix=prefix)
+app.include_router(ingredient_router, prefix=prefix)
